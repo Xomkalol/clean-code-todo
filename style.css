@@ -4,21 +4,21 @@ body {
   color: #333;
   font-family: Lato, sans-serif;
 }
-.aaa {
+.eisenhower-image__wrapper {
   width: 500px;
   margin: 0 auto;
   display: block;
   text-align: right;
 }
-.aaa img {
+.eisenhower-image__wrapper img {
   width: 100%;
 }
-.aaa .more_inf {
+.eisenhower-image__wrapper .eisenhower-image__link-{
   font-family: fantasy, cursive;
 }
 
 @media (max-width: 768px) {
-  .aaa {
+  .eisenhower-image__wrapper {
     text-align: center;
   }
 }
@@ -27,7 +27,7 @@ body {
   width: 500px;
   margin: 0 auto 0;
 }
-.task {
+.task-input {
   width: 56%;
   display: inline-block;
   flex-grow: 1;

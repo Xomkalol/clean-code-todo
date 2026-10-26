@@ -7,10 +7,10 @@
 
 // Event handling, user interaction is what starts the code execution.
 
-const taskInput = document.getElementById("new-task"); //Add a new task.
-const addButton = document.getElementsByTagName("button")[0]; //first button
-const incompleteTaskHolder = document.getElementById("incompleteTasks"); //ul of #incompleteTasks
-const completedTasksHolder = document.getElementById("completed-tasks"); //completed-tasks
+const taskAddInputElement = document.getElementById("new-task"); //Add a new task.
+const addButtonElement = document.getElementsByTagName("button")[0]; //first button
+const incompleteTaskListElement = document.getElementById("incompleteTasks"); //ul of #incompleteTasks
+const completeTaskListElement = document.getElementById("completed-tasks"); //completed-tasks
 
 //New task list item
 const createNewTaskElement = function (taskString) {
@@ -30,12 +30,12 @@ const createNewTaskElement = function (taskString) {
   const deleteButtonImg = document.createElement("img"); //delete button image
 
   label.innerText = taskString;
-  label.className = "task";
+  label.className = "task-input";
 
   //Each elements, needs appending
   checkBox.type = "checkbox";
   editInput.type = "text";
-  editInput.className = "task";
+  editInput.className = "task-input";
 
   editButton.innerText = "Edit"; //innerText encodes special characters, HTML does not.
   editButton.className = "edit";
@@ -53,21 +53,21 @@ const createNewTaskElement = function (taskString) {
   return listItem;
 };
 
-const addTask = function () {
+const handleAddNewTask = function () {
   //Create a new list item with the text from the #new-task:
-  if (!taskInput.value) return;
-  const listItem = createNewTaskElement(taskInput.value);
+  if (!taskAddInputElement.value) return;
+  const listItem = createNewTaskElement(taskAddInputElement.value);
 
   //Append listItem to incompleteTaskHolder
-  incompleteTaskHolder.appendChild(listItem);
-  bindTaskEvents(listItem, checkBoxEventHandler);
+  incompleteTaskListElement.appendChild(listItem);
+  handleBindTaskEvents(listItem, checkBoxEventHandler);
 
-  taskInput.value = "";
+  taskAddInputElement.value = "";
 };
 
 //Edit an existing task.
 
-const editTask = function () {
+const handleEditTask = function () {
   const listItem = this.parentNode;
 
   const editInput = listItem.querySelector("input[type=text]");
@@ -90,7 +90,7 @@ const editTask = function () {
 };
 
 //Delete task.
-const deleteTask = function () {
+const handleDeleteTask = function () {
   const listItem = this.parentNode;
   const ul = listItem.parentNode;
   //Remove the parent list item from the ul.
@@ -101,44 +101,50 @@ const checkBoxEventHandler = function () {
   const listItem = this.parentNode;
 
   if (this.checked) {
-    completedTasksHolder.appendChild(listItem);
+    completeTaskListElement.appendChild(listItem);
   } else {
-    incompleteTaskHolder.appendChild(listItem);
+    incompleteTaskListElement.appendChild(listItem);
   }
 
-  bindTaskEvents(listItem, checkBoxEventHandler);
+  handleBindTaskEvents(listItem, checkBoxEventHandler);
 };
 //Mark task completed
 
 //The glue to hold it all together.
 
 //Set the click handler to the addTask function.
-addButton.addEventListener("click", addTask);
+addButtonElement.addEventListener("click", handleAddNewTask);
 
-const bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
+const handleBindTaskEvents = function (taskListItem, checkBoxEventHandler) {
   const checkBox = taskListItem.querySelector("input[type=checkbox]");
   const editButton = taskListItem.querySelector("button.edit");
   const deleteButton = taskListItem.querySelector("button.delete");
 
   //Bind editTask to edit button.
-  editButton.onclick = editTask;
+  editButton.onclick = handleEditTask;
   //Bind deleteTask to delete button.
-  deleteButton.onclick = deleteTask;
+  deleteButton.onclick = handleDeleteTask;
   //Bind taskCompleted to checkBoxEventHandler.
   checkBox.onchange = checkBoxEventHandler;
 };
 
 //cycle over incompleteTaskHolder ul list items
 //for each list item
-for (let i = 0; i < incompleteTaskHolder.children.length; i++) {
+for (let i = 0; i < incompleteTaskListElement.children.length; i++) {
   //bind events to list items chldren(tasksCompleted)
-  bindTaskEvents(incompleteTaskHolder.children[i], checkBoxEventHandler);
+  handleBindTaskEvents(
+    incompleteTaskListElement.children[i],
+    checkBoxEventHandler,
+  );
 }
 
 //cycle over completedTasksHolder ul list items
-for (let i = 0; i < completedTasksHolder.children.length; i++) {
+for (let i = 0; i < completeTaskListElement.children.length; i++) {
   //bind events to list items chldren(tasksIncompleted)
-  bindTaskEvents(completedTasksHolder.children[i], checkBoxEventHandler);
+  handleBindTaskEvents(
+    completeTaskListElement.children[i],
+    checkBoxEventHandler,
+  );
 }
 
 // Issues with usability don't get seen until they are in front of a human tester.
