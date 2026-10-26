@@ -9,8 +9,10 @@ export default defineConfig([
     plugins: { js },
     extends: ["js/recommended"],
     languageOptions: {
-       ...globals.node,
-       ...globals.browser,
+        globals: {
+        ...globals.browser,
+        ...globals.node
+      },
     },
     rules: {
 			"no-var": "error",
