@@ -16,7 +16,7 @@
   "main": "app.js",
   "scripts": {
     "lint": "eslint .",
-    "write": "prettier . --write"
+    "format": "prettier . --write"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
