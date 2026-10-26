@@ -11,6 +11,11 @@ export default defineConfig([
     languageOptions: {
       globals: globals.node,
     },
+    rules: {
+			"no-var": "error",
+			"prefer-const": "error",
+      "no-console": 'error',
+		},
   },
   prettier,
 ]);
