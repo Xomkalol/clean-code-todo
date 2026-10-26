@@ -9,16 +9,16 @@ export default defineConfig([
     plugins: { js },
     extends: ["js/recommended"],
     languageOptions: {
-        globals: {
+      globals: {
         ...globals.browser,
-        ...globals.node
+        ...globals.node,
       },
     },
     rules: {
-			"no-var": "error",
-			"prefer-const": "error",
-      "no-console": 'error',
-		},
+      "no-var": "error",
+      "prefer-const": "error",
+      "no-console": "error",
+    },
   },
   prettier,
 ]);
